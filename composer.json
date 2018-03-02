@@ -1,0 +1,35 @@
+{
+    "name": "streamlike/php-api-sdk",
+    "description": "Use this toolkit to easily call streamlike.com API endpoints",
+    "license": "proprietary",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mediatech",
+            "email": "technique@mediatech.fr"
+        }
+    ],
+    "require": {
+        "php": "^5.4||^7",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "atoum/atoum": "^3.2",
+        "atoum/stubs": "*"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    }
+}
