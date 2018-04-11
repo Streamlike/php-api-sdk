@@ -132,7 +132,7 @@ class Sdk
             throw new AuthException('No token');
         } elseif (!in_array($verb, ['POST', 'PATCH', 'GET', 'DELETE'])) {
             throw new \InvalidArgumentException('Invalid HTTP method');
-        } elseif (!in_array(strtoupper($verb), ['POST', 'PATCH']) && !empty($files)) {
+        } elseif (!in_array($verb, ['POST', 'PATCH']) && !empty($files)) {
             throw new \InvalidArgumentException('Files can only be uploaded with POST or PATCH method');
         }
 
@@ -142,7 +142,7 @@ class Sdk
     }
 
     /**
-     * Initialize a cURL handle.
+     * Initialize a cURL handler.
      *
      * @param string $path  An API module
      * @param string $verb  Request type: POST, PUT, GET, DELETE
