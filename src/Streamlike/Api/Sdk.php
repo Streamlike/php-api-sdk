@@ -186,7 +186,7 @@ class Sdk
         if ($isMultipart = !empty($files)) {
             $verb = 'POST';
         }
-        $hasPayload = ('POST' === $verb || 'PATCH' === $verb) && (!empty($args) || !empty($files));
+        $hasPayload = 'POST' === $verb || 'PATCH' === $verb;
 
         $headers = [
             'Accept: application/json',
@@ -236,10 +236,6 @@ class Sdk
      */
     private static function buildPayload(array $args, array $files)
     {
-        if (empty($args) && empty($files)) {
-            throw new \InvalidArgumentException('Error while encoding payload');
-        }
-
         $payload = json_encode($args);
 
         if (!empty($files)) {

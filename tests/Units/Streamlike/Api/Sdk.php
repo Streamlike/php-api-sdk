@@ -73,10 +73,8 @@ class Sdk extends atoum
         $existingFilePath = __DIR__.'/../../../fixtures/text.txt';
 
         $this
-            ->exception(function () use ($method) {
-                $method->invoke(null, [], []);
-            })
-                ->isInstanceOf('\InvalidArgumentException')
+            ->string($method->invoke(null, [], []))
+                ->isIdenticalTo('[]')
             ->string($method->invoke(null, ['plop' => 'toto'], []))
                 ->isIdenticalTo('{"plop":"toto"}')
 
