@@ -10,11 +10,12 @@
         }
     ],
     "require": {
-        "php": "^5.4||^7",
+        "php": ">=5.4",
+        "ext-json": "*",
         "ext-curl": "*"
     },
     "require-dev": {
-        "atoum/atoum": "^3.2",
+        "atoum/atoum": "^4.0",
         "atoum/stubs": "*"
     },
     "config": {

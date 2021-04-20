@@ -2,10 +2,10 @@
 
 namespace Tests\Units\Streamlike\Api;
 
-use mageekguy\atoum;
+use atoum\atoum;
 use Streamlike\Api\Sdk as Tested;
 
-class Sdk extends atoum
+class Sdk extends atoum\test
 {
     public function testInstance()
     {

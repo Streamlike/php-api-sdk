@@ -21,16 +21,6 @@ class Sdk
      */
     const BOUNDARY = 'STREAMLIKEBOUND';
 
-    /**
-     * Authentication with a single-use token in order to obtain a session token.
-     */
-    const AUTH_REQUEST_TOKEN = 0;
-
-    /**
-     * Authentication with a certificate in order to obtain a single-use token.
-     */
-    const AUTH_REQUEST_CA = 1;
-
     private $token;
     private $host = 'https://api.streamlike.com/';
     private $isAuthenticating = false;
@@ -53,6 +43,18 @@ class Sdk
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * @param null|string $token
+     *
+     * @return Sdk
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
     }
 
     /**
@@ -138,7 +140,7 @@ class Sdk
 
         list($httpStatus, $response) = $this->doCall($path, $verb, $args, $files);
 
-        return $this->parseResponse($httpStatus, $response);
+        return self::parseResponse($httpStatus, $response);
     }
 
     /**
@@ -211,7 +213,7 @@ class Sdk
             $options[CURLOPT_POST] = true;
         } elseif ('PATCH' === $verb) {
             $options[CURLOPT_CUSTOMREQUEST] = 'PATCH';
-        } elseif ('DELETE' == $verb) {
+        } elseif ('DELETE' === $verb) {
             $options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
         } else { // GET
             if (count($args) > 0) {
@@ -236,7 +238,7 @@ class Sdk
      */
     private static function buildPayload(array $args, array $files)
     {
-        $payload = json_encode($args);
+        $payload = \json_encode($args);
 
         if (!empty($files)) {
             $payload = '
@@ -286,7 +288,7 @@ Content-Disposition: form-data; name="'.$inputName.'"; filename="'.$fileName.'"
         if (401 === $httpStatus || 403 === $httpStatus) {
             throw new AuthRequiredException($httpStatus, $httpStatus);
         } elseif (400 === $httpStatus) { // invalid input
-            $result = json_decode($response, true);
+            $result = \json_decode($response, true);
 
             throw new InvalidInputException(
                 is_array($result) && array_key_exists('message', $result) ? $result['message'] : $httpStatus,
@@ -300,7 +302,7 @@ Content-Disposition: form-data; name="'.$inputName.'"; filename="'.$fileName.'"
             return true;
         }
 
-        $data = json_decode($response, true);
+        $data = \json_decode($response, true);
 
         if (null === $data) {
             throw new Exception("Error while decoding response, original response:\n".print_r($response, true));
